@@ -1,7 +1,9 @@
 FROM php:8.2-apache
 
-RUN docker-php-ext-install mysqli \
-    && a2enmod headers rewrite
+RUN set -eux; \
+    docker-php-ext-install mysqli; \
+    a2dismod mpm_event mpm_worker mpm_prefork || true; \
+    a2enmod mpm_prefork headers rewrite
 
 COPY . /var/www/html/
 
