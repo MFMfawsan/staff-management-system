@@ -18,7 +18,7 @@ To keep the existing UI and functionality unchanged, deploy the complete app to 
 1. Push these prepared files to the `MFMfawsan/staff-management-system` repository.
 2. In Railway, create a new project and deploy the GitHub repository.
 3. Railway will use `Dockerfile` and `railway.toml`.
-4. Add a MySQL service to the same Railway project.
+4. Add a MySQL service to the same Railway project. The healthcheck uses `/health.php`, which does not require the database and only confirms that Apache/PHP is responding.
 5. Import `database/schema.sql` into the Railway MySQL database.
 6. Add these variables to the PHP service, using the values shown by the Railway MySQL service:
    - `DB_HOST`
