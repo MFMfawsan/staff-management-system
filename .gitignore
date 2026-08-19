@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+
+# Runtime uploads are not source files
+assets/uploads/profile_pics/*
+!assets/uploads/profile_pics/default.JPG
+
+# Local/editor files
+.vscode/
+.idea/
+.DS_Store

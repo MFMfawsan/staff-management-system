@@ -1,5 +1,6 @@
 <?php
 session_start(); // Start session
+include 'db/db.php';
 
 // Check admin login
 if (!isset($_SESSION['admin'])) {
@@ -7,11 +8,6 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 
-// Database connection
-$conn = new mysqli("localhost", "root", "", "staff_db");
-if ($conn->connect_error) {
-    die("Database connection failed");
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">

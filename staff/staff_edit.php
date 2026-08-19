@@ -3,6 +3,7 @@ session_start();
 if(!isset($_SESSION['admin'])) header("Location: ../login.php");
 
 include '../db/db.php';
+include '../includes/functions.php';
 
 if(!isset($_GET['id'])) die("No staff selected.");
 $staff_id = trim($_GET['id']); // keep the ID exactly as-is, don't force it to int
@@ -14,14 +15,11 @@ if(isset($_POST['update'])){
     $types = '';
 
     // Handle profile picture separately
-    $uploadDir = "../assets/uploads/profile_pics/";
-    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+    $uploadDir = __DIR__ . "/../assets/uploads/profile_pics/";
 
     if(isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error']==0){
-        $fileTmp = $_FILES['profile_pic']['tmp_name'];
-        $fileName = time().'_'.basename($_FILES['profile_pic']['name']);
-        $filePath = $uploadDir.$fileName;
-        if(move_uploaded_file($fileTmp, $filePath)){
+        $fileName = upload_profile_image($_FILES['profile_pic'], $uploadDir);
+        if($fileName !== null){
             $updates[] = "profile_pic=?";
             $params[] = $fileName;
             $types .= 's';
@@ -406,7 +404,7 @@ button:active {
     foreach($staff as $col=>$val){
         if($col=='staff_id' || $col=='id') continue;
         if($col=='profile_pic'){
-            $imgPath = (!empty($val) && file_exists("../assets/uploads/profile_pics/".$val)) ? "../assets/uploads/profile_pics/".$val : "../assets/uploads/profile_pics/default.png";
+            $imgPath = (!empty($val) && file_exists("../assets/uploads/profile_pics/".$val)) ? "../assets/uploads/profile_pics/".$val : "../assets/uploads/profile_pics/default.JPG";
             echo "<label>Profile Picture</label>";
             echo "<img src='$imgPath' class='photo'>";
             echo "<input type='file' name='profile_pic' accept='image/*'>";

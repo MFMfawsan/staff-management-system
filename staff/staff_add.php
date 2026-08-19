@@ -1,6 +1,7 @@
 <?php
 
 include '../includes/auth.php';
+include '../includes/functions.php';
 include '../db/db.php';
 
 
@@ -50,47 +51,15 @@ if (isset($_POST['add'])) {
        PROFILE PICTURE
     ================================================= */
 
-    $uploadDir = "../assets/uploads/profile_pics/";
+    $uploadDir = __DIR__ . "/../assets/uploads/profile_pics/";
 
     $profile_pic = "default.JPG";
 
 
-    if (!is_dir($uploadDir)) {
-
-        mkdir(
-            $uploadDir,
-            0755,
-            true
-        );
-    }
-
-
-    if (
-        isset($_FILES['profile_pic']) &&
-        $_FILES['profile_pic']['error'] === 0
-    ) {
-
-        $fileTmp = $_FILES['profile_pic']['tmp_name'];
-
-        $originalName = basename(
-            $_FILES['profile_pic']['name']
-        );
-
-        $fileName =
-            time() . "_" . $originalName;
-
-        $filePath =
-            $uploadDir . $fileName;
-
-
-        if (
-            move_uploaded_file(
-                $fileTmp,
-                $filePath
-            )
-        ) {
-
-            $profile_pic = $fileName;
+    if (isset($_FILES['profile_pic'])) {
+        $uploadedImage = upload_profile_image($_FILES['profile_pic'], $uploadDir);
+        if ($uploadedImage !== null) {
+            $profile_pic = $uploadedImage;
         }
     }
 

@@ -1,20 +1,11 @@
 <?php
 session_start();
-
-// Show all errors for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+include '../db/db.php';
 
 // Check if admin is logged in
 if(!isset($_SESSION['admin'])){
     header("Location: ../login.php");
     exit();
-}
-
-// Connect to database
-$conn = new mysqli("localhost","root","","staff_db");
-if($conn->connect_error){
-    die("Database connection failed: " . $conn->connect_error);
 }
 
 // Handle attendance form submission

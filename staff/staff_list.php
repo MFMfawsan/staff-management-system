@@ -584,7 +584,7 @@ if($result->num_rows==0){ echo "<p>No staff found.</p>"; }
 else {
     while($row=$result->fetch_assoc()):
         $filename = trim($row['profile_pic'] ?? '');
-        $imgPath = (!empty($filename) && file_exists($uploadDir.$filename)) ? $uploadDir.$filename : $uploadDir."default.png";
+        $imgPath = (!empty($filename) && file_exists($uploadDir.$filename)) ? $uploadDir.$filename : $uploadDir."default.JPG";
 
         // Format date of join nicely if present
         $doj = !empty($row['date_of_join']) ? date('d M Y', strtotime($row['date_of_join'])) : '-';

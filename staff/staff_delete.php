@@ -1,16 +1,11 @@
 <?php
 session_start();
+include '../db/db.php';
 
 // Security check
 if (!isset($_SESSION['admin'])) {
     header("Location: ../login.php");
     exit();
-}
-
-// Database connection
-$conn = new mysqli("localhost", "root", "", "staff_db");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
 }
 
 // Check ID
